@@ -103,7 +103,7 @@ var changeToGameScene = function(playerNum)
 
         var goal = new Sprite(10, 450);
         goal.backgroundColor = 'red';
-        goal.x = 200;
+        goal.x = 600;
         goal.y = 10;
         game.rootScene.addChild(goal);
 
