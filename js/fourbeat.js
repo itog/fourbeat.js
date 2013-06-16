@@ -10,6 +10,13 @@ var FourBeat = {
     FB_COLORS : ["RED", "BLUE", "YELLOW", "GREEN"],
     connected : false,
 
+    finishActivity : function() {
+        if (typeof FbNativeInterface === 'undefined') {
+        } else {
+            console.log("finishActivity");
+            FbNativeInterface.finishActivity();
+        }
+    },
     preloadSound : function(game, uri, callback) {
         if (typeof FbNativeInterface === 'undefined') {
             game.preload(uri);

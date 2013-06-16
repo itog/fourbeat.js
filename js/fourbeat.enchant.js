@@ -1,15 +1,17 @@
 
-
+fbConnected = true;
 FourBeat.IMAGE_RESOURCES = ['winner.png'];
 
 FourBeat.enableFourBeatOnScene = function(scene, listener) {
     this.buttonListener = listener;
 
 	//TODO check if fourbeat is connected
-	addDummyfourbeatButton(scene, 'RED');
-	addDummyfourbeatButton(scene, 'BLUE');
-	addDummyfourbeatButton(scene, 'YELLOW');
-	addDummyfourbeatButton(scene, 'GREEN');
+	if (!fbConnected) {
+		addDummyfourbeatButton(scene, 'RED');
+		addDummyfourbeatButton(scene, 'BLUE');
+		addDummyfourbeatButton(scene, 'YELLOW');
+		addDummyfourbeatButton(scene, 'GREEN');
+	}
 }
 
 
@@ -157,7 +159,8 @@ FourBeat.StartScene = {
 	    this.finishCallback(this.numPlayer);
 	},
 	exitAction : function() {
-		history.back();
+		//history.back();
+		FourBeat.finishActivity();
 	},
 	fourbeatListener : function(event, color) {
 	    console.log(event + ", " + color);
@@ -360,8 +363,9 @@ FourBeat.GameOverScene = {
 	    callback();	    
 	},
 	gameExitAction : function() {
-	   	history.back();
+//	   	history.back();
 	    FourBeat.stopMusic();
+	    FourBeat.finishActivity();
 	}
 }
 
