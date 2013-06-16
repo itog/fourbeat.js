@@ -1,15 +1,17 @@
 
-
+fbConnected = true;
 FourBeat.IMAGE_RESOURCES = ['winner.png'];
 
 FourBeat.enableFourBeatOnScene = function(scene, listener) {
     this.buttonListener = listener;
 
 	//TODO check if fourbeat is connected
-	addDummyfourbeatButton(scene, 'RED');
-	addDummyfourbeatButton(scene, 'BLUE');
-	addDummyfourbeatButton(scene, 'YELLOW');
-	addDummyfourbeatButton(scene, 'GREEN');
+	if (!fbConnected) {
+		addDummyfourbeatButton(scene, 'RED');
+		addDummyfourbeatButton(scene, 'BLUE');
+		addDummyfourbeatButton(scene, 'YELLOW');
+		addDummyfourbeatButton(scene, 'GREEN');
+	}
 }
 
 
@@ -131,7 +133,7 @@ FourBeat.BUTTON_THEMES  = {
 
 //-------------------------------------
 
-FourBeat.SelectNumPlayersScene = {
+FourBeat.StartScene = {
 	numPlayer : 4,
 	musicId : 0,
 	numPlayerLabel : null,
@@ -157,7 +159,8 @@ FourBeat.SelectNumPlayersScene = {
 	    this.finishCallback(this.numPlayer);
 	},
 	exitAction : function() {
-		history.back();
+		//history.back();
+		FourBeat.finishActivity();
 	},
 	fourbeatListener : function(event, color) {
 	    console.log(event + ", " + color);
@@ -166,16 +169,16 @@ FourBeat.SelectNumPlayersScene = {
 		}
 		switch (color) {
 		case 'RED':
-			this.SelectNumPlayersScene.okAction();
+			this.StartScene.okAction();
 			break;
 		case 'BLUE':
-		    this.SelectNumPlayersScene.downAction();
+		    this.StartScene.downAction();
 			break
 		case 'YELLOW':
-			this.SelectNumPlayersScene.upAction();
+			this.StartScene.upAction();
 			break
 	    case 'GREEN':
-			this.SelectNumPlayersScene.exitAction();
+			this.StartScene.exitAction();
 	        break;
 		default:
 			break;
@@ -360,8 +363,9 @@ FourBeat.GameOverScene = {
 	    callback();	    
 	},
 	gameExitAction : function() {
-	   	history.back();
+//	   	history.back();
 	    FourBeat.stopMusic();
+	    FourBeat.finishActivity();
 	}
 }
 
