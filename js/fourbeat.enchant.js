@@ -131,7 +131,7 @@ FourBeat.BUTTON_THEMES  = {
 
 //-------------------------------------
 
-FourBeat.SelectNumPlayersScene = {
+FourBeat.StartScene = {
 	numPlayer : 4,
 	musicId : 0,
 	numPlayerLabel : null,
@@ -166,16 +166,16 @@ FourBeat.SelectNumPlayersScene = {
 		}
 		switch (color) {
 		case 'RED':
-			this.SelectNumPlayersScene.okAction();
+			this.StartScene.okAction();
 			break;
 		case 'BLUE':
-		    this.SelectNumPlayersScene.downAction();
+		    this.StartScene.downAction();
 			break
 		case 'YELLOW':
-			this.SelectNumPlayersScene.upAction();
+			this.StartScene.upAction();
 			break
 	    case 'GREEN':
-			this.SelectNumPlayersScene.exitAction();
+			this.StartScene.exitAction();
 	        break;
 		default:
 			break;
