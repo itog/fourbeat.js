@@ -11,6 +11,7 @@ var FourBeat = {
     connected : false,
 
     finishActivity : function() {
+        console.log("*****");
         if (typeof FbNativeInterface === 'undefined') {
         } else {
             console.log("finishActivity");
@@ -38,18 +39,18 @@ var FourBeat = {
     playSound : function(id) {
 
     },
-    playMusic2 : function(filePath) {
-        if (typeof FbNativeInterface === 'undefined') {
-            console.log("playMusic() on Android");
-        } else {
-            FbNativeInterface.playMusic2(filePath);
-        }
-    },
     playMusic : function(id) {
         if (typeof FbNativeInterface === 'undefined') {
             console.log("playMusic() on Android");
         } else {
             FbNativeInterface.playMusic(id);
+        }
+    },
+    playMusic2 : function(filePath) {
+        if (typeof FbNativeInterface === 'undefined') {
+            console.log("playMusic() on Android");
+        } else {
+            FbNativeInterface.playMusic2(filePath);
         }
     },
     stopMusic : function() {

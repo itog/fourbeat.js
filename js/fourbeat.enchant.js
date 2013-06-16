@@ -1,5 +1,5 @@
 
-fbConnected = true;
+fbConnected = false;
 FourBeat.IMAGE_RESOURCES = ['winner.png'];
 
 FourBeat.enableFourBeatOnScene = function(scene, listener) {
@@ -133,7 +133,7 @@ FourBeat.BUTTON_THEMES  = {
 
 //-------------------------------------
 
-FourBeat.StartScene = {
+FourBeat.SelectNumPlayersScene = {
 	numPlayer : 4,
 	musicId : 0,
 	numPlayerLabel : null,
@@ -169,16 +169,16 @@ FourBeat.StartScene = {
 		}
 		switch (color) {
 		case 'RED':
-			this.StartScene.okAction();
+			this.SelectNumPlayersScene.okAction();
 			break;
 		case 'BLUE':
-		    this.StartScene.downAction();
+		    this.SelectNumPlayersScene.downAction();
 			break
 		case 'YELLOW':
-			this.StartScene.upAction();
+			this.SelectNumPlayersScene.upAction();
 			break
 	    case 'GREEN':
-			this.StartScene.exitAction();
+			this.SelectNumPlayersScene.exitAction();
 	        break;
 		default:
 			break;
