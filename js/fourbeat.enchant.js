@@ -3,7 +3,7 @@ fbConnected = false;
 FourBeat.IMAGE_RESOURCES = ['winner.png'];
 
 FourBeat.enableFourBeatOnScene = function(scene, listener) {
-    this.buttonListener = listener;
+    scene.fbListener = listener;
 
 	//TODO check if fourbeat is connected
 	if (!fbConnected) {
@@ -14,6 +14,9 @@ FourBeat.enableFourBeatOnScene = function(scene, listener) {
 	}
 }
 
+FourBeat.buttonListener = function(event, color) {
+	enchant.Core.instance.currentScene.fbListener(event, color);
+}
 
 function addDummyfourbeatButton(scene, color) {
 
