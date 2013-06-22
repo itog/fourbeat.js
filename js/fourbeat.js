@@ -26,10 +26,6 @@ var FourBeat = {
             this.preloadSoundCallback = callback;
         }
     },
-    loadSound : function(uri, callback) {
-        FbNativeInterface.loadSound(uri);
-        this.loadSoundCallback = callback;
-    },
     setButtonEventListener : function(listener) {
         this.buttonListener = listener;
     },
@@ -77,10 +73,8 @@ function nativeFourBeatEvent(fbEvent) {
             FourBeat.preloadSoundCallback(fbEvent.result);
             FourBeat.preloadSoundCallback = null;
             break;
-        case 'loadSound':
-            FourBeat.loadSoundCallback(fbEvent.result);
-            FourBeat.loadSoundCallback = null;
-            break;
+    default:
+        break;
         }
     }
 }

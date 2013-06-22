@@ -26,7 +26,7 @@ window.onload = function() {
                 switch (color) {
                 case FourBeat.FB_COLOR_RED:
                     label.text = 'scene1: red';
-                    game.pushScene(newScene());
+                    game.pushScene(game.scene2);
                     break;
                 case FourBeat.FB_COLOR_BLUE:
                     label.text = 'scene1: blue';
@@ -59,20 +59,30 @@ window.onload = function() {
             sprite.image = game.assets[CHARA_IMAGE_NAME];
             scene.addChild(sprite);
 
+            var movingStep = 0;
+            game.addEventListener(Event.ENTER_FRAME, function() {
+                console.log('enterframe');
+                sprite.x += movingStep;
+            });
+
             FourBeat.enableFourBeatOnScene(scene, function(event, color) {
                 if (event == FourBeat.FB_EVENT_PRESS) {
                     switch (color) {
                     case FourBeat.FB_COLOR_RED:
                         label.text = 'scene2: red';
+                        movingStep = 0;
                         break;
                     case FourBeat.FB_COLOR_BLUE:
                         label.text = 'scene2: blue';
+                        movingStep = -2;
                         break
                     case FourBeat.FB_COLOR_YELLOW:
                         label.text = 'scene2: yellow';
+                        movingStep = 2;
                         break
                     case FourBeat.FB_COLOR_GREEN:
                         label.text = 'scene2: green';
+                        movingStep = 0;
                         game.popScene();
                         break;
                     default:
@@ -86,45 +96,3 @@ window.onload = function() {
     game.start();
 };
 
-
-
-var newScene = function() {
-    game = Core.instance;
-    var scene = new Scene();
-    
-    var sprite = new Sprite(640, 480);
-    sprite.image = game.assets[BACKGROUND_IMG_2];
-    scene.addChild(sprite);
-
-    var label = new Label("test");
-    label.x = 200;
-    label.y = 100;
-    scene.addChild(label);
-
-    var sprite = new Sprite(32, 32);
-    sprite.image = game.assets[CHARA_IMAGE_NAME];
-    scene.addChild(sprite);
-
-    FourBeat.enableFourBeatOnScene(scene, function(event, color) {
-        if (event == FourBeat.FB_EVENT_PRESS) {
-            switch (color) {
-            case FourBeat.FB_COLOR_RED:
-                label.text = 'scene2: red';
-                break;
-            case FourBeat.FB_COLOR_BLUE:
-                label.text = 'scene2: blue';
-                break
-            case FourBeat.FB_COLOR_YELLOW:
-                label.text = 'scene2: yellow';
-                break
-            case FourBeat.FB_COLOR_GREEN:
-                label.text = 'scene2: green';
-                game.popScene();
-                break;
-            default:
-                break;
-            }
-        }
-    });
-    return scene;
-};
