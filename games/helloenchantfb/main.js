@@ -10,6 +10,13 @@ var BACKGROUND_IMG_2 = "fb2.jpg";
 window.onload = function() {
     var game = new Core(SCREEN_WIDTH, SCREEN_HEIGHT);
     game.preload(CHARA_IMAGE_NAME, BACKGROUND_IMG_1, BACKGROUND_IMG_2);
+    game.fps = 30;
+
+    console.log('load sound');
+    FourBeat.preloadSound(game, "nande.ogg", function(id) {
+        console.log("loaded sound id = " + id);
+        game.soundId = id;
+    });
 
     game.onload = function() {
         var sprite = new Sprite(SCREEN_WIDTH, SCREEN_HEIGHT);
@@ -30,6 +37,8 @@ window.onload = function() {
                     break;
                 case FourBeat.FB_COLOR_BLUE:
                     label.text = 'scene1: blue';
+                    console.log('play sound id = ' + game.soundId);
+                    FourBeat.playSound(game.id);
                     break
                 case FourBeat.FB_COLOR_YELLOW:
                     label.text = 'scene1: yellow';
@@ -61,7 +70,7 @@ window.onload = function() {
 
             var movingStep = 0;
             game.addEventListener(Event.ENTER_FRAME, function() {
-                console.log('enterframe');
+//                console.log('enterframe');
                 sprite.x += movingStep;
             });
 

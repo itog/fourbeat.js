@@ -11,8 +11,8 @@ var FourBeat = {
     connected : false,
 
     finishActivity : function() {
-        console.log("*****");
         if (typeof FbNativeInterface === 'undefined') {
+            console.log('Warning : calling finishActivity() not on Android');
         } else {
             console.log("finishActivity");
             FbNativeInterface.finishActivity();
@@ -20,7 +20,7 @@ var FourBeat = {
     },
     preloadSound : function(game, uri, callback) {
         if (typeof FbNativeInterface === 'undefined') {
-            game.preload(uri);
+            console.log('Warning : calling preloadSound() not on Android');
         } else {
             FbNativeInterface.preloadSound(uri);
             this.preloadSoundCallback = callback;
@@ -33,25 +33,29 @@ var FourBeat = {
         this.arrowKeyEmulation = enable;
     },
     playSound : function(id) {
-
+        if (typeof FbNativeInterface === 'undefined') {
+            console.log('Warning : calling playSound() not on Android');
+        } else {
+            FbNativeInterface.playSound(id);
+        }
     },
     playMusic : function(id) {
         if (typeof FbNativeInterface === 'undefined') {
-            console.log("playMusic() on Android");
+            console.log('Warning : calling playMusic() not on Android');
         } else {
             FbNativeInterface.playMusic(id);
         }
     },
     playMusic2 : function(filePath) {
         if (typeof FbNativeInterface === 'undefined') {
-            console.log("playMusic() on Android");
+            console.log('Warning : calling playMusic2() not on Android');
         } else {
             FbNativeInterface.playMusic2(filePath);
         }
     },
     stopMusic : function() {
         if (typeof FbNativeInterface === 'undefined') {
-            console.log("stopMusic() on Android");
+            console.log('Warning : calling stopMusic() not on Android');
         } else {
             FbNativeInterface.stopMusic();
         }
@@ -70,8 +74,9 @@ function nativeFourBeatEvent(fbEvent) {
     case 'callback':
         switch (fbEvent.functionName) {
         case 'preloadSound':
-            FourBeat.preloadSoundCallback(fbEvent.result);
-            FourBeat.preloadSoundCallback = null;
+            if (fbEvent.result === "ok") {
+                FourBeat.preloadSoundCallback(fbEvent.id);
+            }
             break;
     default:
         break;
