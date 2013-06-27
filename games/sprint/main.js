@@ -30,7 +30,7 @@ window.onload = function() {
 	var game = new Game(640, 480);
     console.log('load resources');
     game.preload(FIXED_BACKGROUND, MOVING_BACKGROUND,
-       'runner_red.png', 'runner_blue.png', 'runner_yellow.png', 'runner_green.png');
+       'runner_red.png', 'runner_blue.png', 'runner_yellow.png', 'runner_green.png', 'icon0.png');
 	game.preload(FourBeat.IMAGE_RESOURCES);
 	
 	FourBeat.SelectNumPlayersScene.show(function(numPlayer) {
@@ -58,6 +58,8 @@ var changeToGameScene = function(playerNum)
 	game.addEventListener(Event.DOWN_BUTTON_DOWN, move);
 	game.addEventListener(Event.RIGHT_BUTTON_DOWN, move);
 	game.addEventListener(Event.LEFT_BUTTON_DOWN, move);
+
+    game.gameStatus = 0;
         
     game.onload = function() {
 
@@ -72,9 +74,11 @@ var changeToGameScene = function(playerNum)
         background.image = game.assets[MOVING_BACKGROUND];
         background.frame = 0;
         background.moveTo(0, 0);
-
         background.onenterframe = function() {
-             this.x -= SCROLL_SPEED;
+            if (!game.gameRunning) {
+                return ;
+            }
+            this.x -= SCROLL_SPEED;
             if (this.x <= -(background.width - game.width)) {
                 background.moveTo(0, 0);
             }
@@ -107,8 +111,28 @@ var changeToGameScene = function(playerNum)
         goal.y = 10;
         game.rootScene.addChild(goal);
 
+        var countDown = new Sprite(16, 16);
+        countDown.image = game.assets['icon0.png'];
+        countDown.frame = 2;
+        countDown.scale(4, 4);
+        countDown.x = SCREEN_WIDTH / 2;
+        countDown.y = SCREEN_HEIGHT / 2;
+        game.rootScene.addChild(countDown);
+
+        game.frameCount = 0;
+        game.gameRunning = false;
         game.addEventListener('enterframe', function(e) {
 //          console.log(e.elapsed);
+            game.frameCount++;
+            if (game.frameCount == 30) {
+                countDown.frame = 1;
+            } else if (game.frameCount == 60) {
+                countDown.frame = 0;
+            } else if (game.frameCount == 90) {
+//                game.rootScene.removeChild(countDown);
+                countDown.frame = 79;
+                game.gameRunning = true;
+            }
         });
 
         for (var i = 0; i < players.length; i++) {
@@ -124,6 +148,12 @@ var changeToGameScene = function(playerNum)
                     gScores[i] += 1;
                     FourBeat.stopMusic();
                     FourBeat.GameOverScene.show(i, function() {
+                        // reset the game status
+                        console.log('reset the status');
+                        game.frameCount = 0;
+                        countDown.frame = 2;
+                        game.gameRunning = false;
+
                         FourBeat.playMusic(1);
                         for (var j = 0; j < players.length; j++) {
                             players[j].x = 0;
@@ -141,14 +171,17 @@ var changeToGameScene = function(playerNum)
                 'green: ' + gScores[3];
         });
 
-		FourBeat.enableFourBeatOnScene(game.rootScene, fourbeatCallbackGame);
+        FourBeat.enableFourBeatOnScene(game.rootScene, fourbeatCallbackGame);
     };
+
     game.start();
-    
     FourBeat.playMusic(1);
 }
 
 fourbeatCallbackGame = function(event, color) {
+    if (!Core.instance.gameRunning) {
+        return;
+    }
     if (event == FourBeat.FB_EVENT_PRESS) {
         switch (color) {
         case FourBeat.FB_COLOR_RED:

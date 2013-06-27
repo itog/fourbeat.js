@@ -172,16 +172,16 @@ FourBeat.SelectNumPlayersScene = {
 		}
 		switch (color) {
 		case 'RED':
-			this.SelectNumPlayersScene.okAction();
+			FourBeat.SelectNumPlayersScene.okAction();
 			break;
 		case 'BLUE':
-		    this.SelectNumPlayersScene.downAction();
+		    FourBeat.SelectNumPlayersScene.downAction();
 			break
 		case 'YELLOW':
-			this.SelectNumPlayersScene.upAction();
+			FourBeat.SelectNumPlayersScene.upAction();
 			break
 	    case 'GREEN':
-			this.SelectNumPlayersScene.exitAction();
+			FourBeat.SelectNumPlayersScene.exitAction();
 	        break;
 		default:
 			break;
